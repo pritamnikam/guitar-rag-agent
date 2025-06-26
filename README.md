@@ -42,41 +42,119 @@ This project delivers personalized guitar recommendations by combining semantic 
 ---
 
 ## ✨ Features
-- Personalized guitar recommendations
-- Remembers user preferences across conversation
-- Semantic product search using embeddings
-- RESTful API interface
+- Personalized guitar recommendations based on user preferences
+- Context-aware conversation (remembers user choices)
+- Semantic product search using vector embeddings (RAG)
+- FastAPI-powered REST API
+- Easy to extend with new products or recommendation logic
+- Ready for e-commerce chatbot integration
 
 ---
 
-## 🛠️ Setup
-1. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **Set up environment variables**
-   - Create a `.env` file:
-     ```
-     OPENAI_API_KEY=your_api_key_here
-     ```
-3. **Run the server**
-   ```bash
-   python main.py
-   ```
+## 🛠️ Getting Started
+
+### 1. Prerequisites
+- Python 3.9+
+- OpenAI API key (for embeddings/LLM)
+- (Optional) Docker for containerized deployment
+
+### 2. Installation
+```bash
+# Clone the repo
+git clone https://github.com/pritamnikam/guitar-rag-agent.git
+cd guitar-rag-agent
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set your OpenAI API key in a .env file
+OPENAI_API_KEY=your-openai-key
+```
+
+### 3. Running the App
+```bash
+# Start the FastAPI server
+python main.py
+```
+
+The API will be available at: [http://localhost:8000](http://localhost:8000)
+
+### 4. Running with Docker
+```bash
+# Build the Docker image
+docker build -t guitar-rag-agent .
+
+# Run the container (replace YOUR_OPENAI_KEY with your actual key)
+docker run -e OPENAI_API_KEY=YOUR_OPENAI_KEY -p 8000:8000 guitar-rag-agent
+```
+
+The API will be available at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
-## 🔗 Example API Usage
-**POST /recommend**
+## 🛠️ Usage
+
+### Recommendation Endpoint
+`POST /recommend/`
+
+**Request Body:**
 ```json
 {
-  "message": "I want a classical guitar under $700"
+  "budget": 1500,
+  "style": "electric",
+  "brand_preference": "Fender",
+  "features": ["humbuckers", "tremolo"],
+  "experience_level": "intermediate"
 }
 ```
+
 **Response:**
+Returns a list of recommended guitars with reasons and scores.
+
+### Conversational Endpoint
+`POST /chat/`
+
+**Request Body:**
+```json
+{
+  "message": "Suggest a good acoustic guitar under $1000 for a beginner."
+}
 ```
-"I recommend the Yamaha C40II, a great classical guitar under $700."
-```
+
+**Response:**
+Returns a conversational response with recommendations.
+
+---
+
+## 🧩 Extending & Customizing
+- Add more guitars or features in `guitar_agent.py`
+- Adjust scoring or recommendation logic in the agent class
+- Swap in a different LLM or vector DB if desired
+
+---
+
+## 🧑‍💻 Tech Stack
+- **Python**
+- **FastAPI**
+- **LangChain**
+- **ChromaDB** (vector store)
+- **OpenAI** (embeddings/LLM)
+- **Docker** (optional)
+
+---
+
+## 🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+---
+
+## 📄 License
+MIT
+
+---
+
+## 📬 Contact
+Created by [Pritam Nikam](https://github.com/pritamnikam) – feel free to reach out via GitHub Issues.
 
 ---
 
